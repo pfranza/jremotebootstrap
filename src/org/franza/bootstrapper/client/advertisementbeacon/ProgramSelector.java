@@ -20,9 +20,11 @@ public class ProgramSelector extends JFrame implements AdvertisementListener, Mo
 	private final Map<String, Advertisement> ads = new HashMap<String, Advertisement>();
 
 	private String[] args;
+
+	private final AdvertisementObserver adServer;
 	
 	public ProgramSelector(final AdvertisementObserver ads) {
-
+		this.adServer = ads;
 		list.addMouseListener(this);
 		
 		list.setSize(300, 200);
@@ -30,6 +32,7 @@ public class ProgramSelector extends JFrame implements AdvertisementListener, Mo
 		this.pack();
 		this.getContentPane().add(list);
 		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	public void setArgs(final String[] arg) {
@@ -52,6 +55,9 @@ public class ProgramSelector extends JFrame implements AdvertisementListener, Mo
             final Advertisement a = (Advertisement) list.getSelectedValue();
             final Client cli = new Client(a.getHostname(), a.getPort());
             	try {
+            		this.setVisible(false);
+            		this.dispose();
+            		adServer.halt();
 					cli.runMainMethod(a.getClassName(), args);
 				} catch (final Exception e1) {
 					e1.printStackTrace();
