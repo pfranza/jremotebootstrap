@@ -1,6 +1,8 @@
 package org.franza.bootstrapper.server.advertisementbeacon;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
@@ -28,6 +30,24 @@ public class Advertisement {
 
 			return baos.toByteArray();
 
+	}
+	
+	public static Advertisement fromByteArray(final byte[] data) throws IOException {
+		final DataInputStream dis = new DataInputStream(new ByteArrayInputStream(data));
+		final Advertisement a = new Advertisement(dis.readUTF(), dis.readUTF(), dis.readInt());
+		return a;
+	}
+
+	public String getServiceName() {
+		return serviceName;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public int getPort() {
+		return port;
 	}
 
 }

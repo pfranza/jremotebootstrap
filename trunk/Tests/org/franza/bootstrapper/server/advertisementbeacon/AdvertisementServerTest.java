@@ -1,5 +1,7 @@
 package org.franza.bootstrapper.server.advertisementbeacon;
 
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
 import org.franza.bootstrapper.client.advertisementbeacon.AdvertisementObserver;
@@ -7,15 +9,20 @@ import org.franza.bootstrapper.client.advertisementbeacon.AdvertisementObserver.
 
 public class AdvertisementServerTest extends TestCase implements AdvertisementListener {
 
+	private static final int PORT = 3000;
+	private static final String TESTPACKAGE_TESTCLASS = "testpackage.testclass";
+	private static final String TEST_SERVICE = "testService";
 	private boolean recv = false;
 	
 	public void testBeacon() throws Exception {
 		
-		final Advertiser a = new Advertiser(4000);
-			a.addAdvertisement(new Advertisement("testService", 
-					"testpackage.testclass", 3000));
+		final int port = 4000;
+		
+		final Advertiser a = new Advertiser(port);
+			a.addAdvertisement(new Advertisement(TEST_SERVICE, 
+					TESTPACKAGE_TESTCLASS, PORT));
 			
-			final AdvertisementObserver b = new AdvertisementObserver(4000);
+			final AdvertisementObserver b = new AdvertisementObserver(port);
 				b.addListener(this);
 			
 				Thread.sleep(6000);
@@ -28,7 +35,16 @@ public class AdvertisementServerTest extends TestCase implements AdvertisementLi
 
 	@Override
 	public void processAdvertisement(final byte[] ad, final int length) {
-		recv = true;	
+		try {
+			final Advertisement a = Advertisement.fromByteArray(ad);
+			recv = true;
+			assertEquals(TEST_SERVICE, a.getServiceName());
+			assertEquals(TESTPACKAGE_TESTCLASS, a.getClassName());
+			assertEquals(PORT, a.getPort());
+
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
