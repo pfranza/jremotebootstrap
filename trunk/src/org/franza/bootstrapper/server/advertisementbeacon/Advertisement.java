@@ -11,11 +11,13 @@ public class Advertisement {
 	private final String serviceName;
 	private final String className;
 	private final int port;
+	private final String hostname;
 
 	public Advertisement(final String serviceName, final String className,
-			final int portNumber) {
+			final String hostname, final int portNumber) {
 		this.serviceName = serviceName;
 		this.className = className;
+		this.hostname = hostname;
 		this.port = portNumber;
 	}
 	
@@ -26,6 +28,7 @@ public class Advertisement {
 
 			dos.writeUTF(serviceName);
 			dos.writeUTF(className);
+			dos.writeUTF(hostname);
 			dos.writeInt(port);
 
 			return baos.toByteArray();
@@ -35,7 +38,7 @@ public class Advertisement {
 	public static Advertisement fromByteArray(final byte[] data) {
 		try {
 			final DataInputStream dis = new DataInputStream(new ByteArrayInputStream(data));
-			final Advertisement a = new Advertisement(dis.readUTF(), dis.readUTF(), dis.readInt());
+			final Advertisement a = new Advertisement(dis.readUTF(), dis.readUTF(), dis.readUTF(), dis.readInt());
 			return a;
 		} catch (final Exception e) {
 			return null;
@@ -52,6 +55,24 @@ public class Advertisement {
 
 	public int getPort() {
 		return port;
+	}
+	
+	@Override
+	public String toString() {
+		final StringBuffer buf = new StringBuffer();
+			buf.append(serviceName)
+			   .append(": (")
+			   .append(className)
+			   .append(") ")
+			   .append(hostname)
+			   .append(":")
+			   .append(port);
+		
+		return buf.toString();
+	}
+
+	public String getHostname() {
+		return hostname;
 	}
 
 }

@@ -18,7 +18,7 @@ public class AdvertisementServerTest extends TestCase implements AdvertisementLi
 		
 		final Advertiser a = new Advertiser(port);
 			a.addAdvertisement(new Advertisement(TEST_SERVICE, 
-					TESTPACKAGE_TESTCLASS, PORT));
+					TESTPACKAGE_TESTCLASS, "127.0.0.1", PORT));
 			
 			final AdvertisementObserver b = new AdvertisementObserver(port);
 				b.addListener(this);

@@ -42,6 +42,6 @@ public class ClientServerTest extends TestCase {
 	}
 	
 	public static void main(final String[] args) {
-
+		System.out.println("Method Run!");
 	}
 }
