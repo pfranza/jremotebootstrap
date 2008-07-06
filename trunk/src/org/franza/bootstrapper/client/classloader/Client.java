@@ -2,6 +2,7 @@ package org.franza.bootstrapper.client.classloader;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import org.franza.bootstrapper.client.advertisementbeacon.AdvertisementObserver;
 import org.franza.bootstrapper.client.advertisementbeacon.ProgramSelector;
@@ -24,6 +25,7 @@ public class Client {
 	public static void main(final String[] args) {
 		final AdvertisementObserver ads = new AdvertisementObserver(Integer.valueOf(args[0]));
 		final ProgramSelector program = new ProgramSelector(ads);
+			program.setArgs(Arrays.copyOfRange(args, 1, args.length));
 			ads.addListener(program);
 
 	}
