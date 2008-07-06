@@ -1,7 +1,5 @@
 package org.franza.bootstrapper.server.advertisementbeacon;
 
-import java.io.IOException;
-
 import junit.framework.TestCase;
 
 import org.franza.bootstrapper.client.advertisementbeacon.AdvertisementObserver;
@@ -35,16 +33,15 @@ public class AdvertisementServerTest extends TestCase implements AdvertisementLi
 
 	@Override
 	public void processAdvertisement(final byte[] ad, final int length) {
-		try {
 			final Advertisement a = Advertisement.fromByteArray(ad);
 			recv = true;
 			assertEquals(TEST_SERVICE, a.getServiceName());
 			assertEquals(TESTPACKAGE_TESTCLASS, a.getClassName());
 			assertEquals(PORT, a.getPort());
-
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
+	}
+	
+	public void testNoConstruction() throws Exception {
+		assertNull(Advertisement.fromByteArray(new byte[0]));
 	}
 	
 }

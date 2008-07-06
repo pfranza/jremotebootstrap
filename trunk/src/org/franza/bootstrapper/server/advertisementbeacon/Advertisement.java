@@ -32,10 +32,14 @@ public class Advertisement {
 
 	}
 	
-	public static Advertisement fromByteArray(final byte[] data) throws IOException {
-		final DataInputStream dis = new DataInputStream(new ByteArrayInputStream(data));
-		final Advertisement a = new Advertisement(dis.readUTF(), dis.readUTF(), dis.readInt());
-		return a;
+	public static Advertisement fromByteArray(final byte[] data) {
+		try {
+			final DataInputStream dis = new DataInputStream(new ByteArrayInputStream(data));
+			final Advertisement a = new Advertisement(dis.readUTF(), dis.readUTF(), dis.readInt());
+			return a;
+		} catch (final Exception e) {
+			return null;
+		}
 	}
 
 	public String getServiceName() {
