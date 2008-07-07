@@ -83,9 +83,10 @@ public class Server {
 		while(en.hasMoreElements()) {
 			final JarEntry e = en.nextElement();
 			if(e.getName().endsWith(".class") && !e.getName().contains("$")) {
-			
+				try {
 				final Class<?> c = Class.forName(e.getName().substring(0, e.getName().length()-6).replace('/', '.'));
 				addItem(l, c);
+				} catch (final NoClassDefFoundError n) {}
 			}
 		}
 		
