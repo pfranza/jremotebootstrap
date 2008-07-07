@@ -7,6 +7,7 @@ import org.franza.bootstrapper.client.advertisementbeacon.AdvertisementObserver;
 import org.franza.bootstrapper.client.advertisementbeacon.selector.CliProgramSelector;
 import org.franza.bootstrapper.client.advertisementbeacon.selector.SelectorInterface;
 import org.franza.bootstrapper.client.advertisementbeacon.selector.UiProgramSelector;
+import org.franza.bootstrapper.server.Server;
 
 public class Client {
 
@@ -24,7 +25,7 @@ public class Client {
 	}
 	
 	public static void main(final String[] args) {
-		final AdvertisementObserver ads = new AdvertisementObserver(Integer.valueOf(System.getProperty("port", "3000")));
+		final AdvertisementObserver ads = new AdvertisementObserver(Server.getPort());
 		final String c = System.getProperty("class");
 		final SelectorInterface iface = (c == null)?new UiProgramSelector(ads):new CliProgramSelector(c, ads);
 			iface.setArgs(args);
