@@ -1,4 +1,4 @@
-package org.franza.bootstrapper.client.advertisementbeacon;
+package org.franza.bootstrapper.client.advertisementbeacon.selector;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -8,11 +8,11 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JList;
 
-import org.franza.bootstrapper.client.advertisementbeacon.AdvertisementObserver.AdvertisementListener;
+import org.franza.bootstrapper.client.advertisementbeacon.AdvertisementObserver;
 import org.franza.bootstrapper.client.classloader.Client;
 import org.franza.bootstrapper.server.advertisementbeacon.Advertisement;
 
-public class ProgramSelector extends JFrame implements AdvertisementListener, MouseListener {
+public class UiProgramSelector extends JFrame implements SelectorInterface, MouseListener {
 
 	private static final long serialVersionUID = 5411807871327808945L;
 	
@@ -23,7 +23,7 @@ public class ProgramSelector extends JFrame implements AdvertisementListener, Mo
 
 	private final AdvertisementObserver adServer;
 	
-	public ProgramSelector(final AdvertisementObserver ads) {
+	public UiProgramSelector(final AdvertisementObserver ads) {
 		this.adServer = ads;
 		list.addMouseListener(this);
 		
